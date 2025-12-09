@@ -1,0 +1,4 @@
+include README.md
+include LICENSE
+recursive-include django_zarinpal_gateway/templates *
+recursive-include django_zarinpal_gateway/static *

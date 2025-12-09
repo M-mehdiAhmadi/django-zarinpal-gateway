@@ -1,1 +1,85 @@
+
 # django_zarinpal
+
+A reusable Django application that provides a clean integration with the Zarinpal payment gateway.  
+This package offers utilities for sending payment requests, verifying transactions, and redirecting users to the Zarinpal payment page.
+
+## Features
+
+- Simple API for creating and verifying Zarinpal payments  
+- Fully compatible with Django projects  
+- Configurable endpoints for Zarinpal sandbox or production  
+- Reusable app structure following Django best practices  
+
+
+
+## Installation
+
+```bash
+git clone https://github.com/M-mehdiAhmadi/django-zarinpal.git
+````
+
+Add the app to your Django project:
+
+```python
+INSTALLED_APPS = [
+    ...
+    "django_zarinpal_gateway",
+]
+```
+
+---
+
+## Configuration
+
+Add the following settings to `settings.py`:
+
+```python
+ZA_MERCHANT_ID = "YOUR_MERCHANT_ID"
+
+ZA_API_REQUEST_URL = "https://api.zarinpal.com/pg/v4/payment/request.json"
+ZA_API_VERIFY_URL = "https://api.zarinpal.com/pg/v4/payment/verify.json"
+ZA_API_STARTPAY_URL = "https://www.zarinpal.com/pg/StartPay/{authority}"
+```
+
+---
+
+## Usage
+
+### Creating a payment request
+
+```python
+from .views import BaseTransactionRequestView
+from .models import TransactionStatus
+
+class MyPaymentRequestView(BaseTransactionRequestView):
+    template_name = "myapp/custom_payment_form.html"
+
+```
+
+### Verifying the payment
+
+```python
+from django_zarinpal_gateway.views import BaseTransactionVerifyView
+from .models import Transaction, TransactionStatus
+from django.shortcuts import render
+
+class MyPaymentVerifyView(BaseTransactionVerifyView):
+    def on_verify_success(self, transaction: Transaction, ref_id: str):
+        # your logic on success
+        return render(self.request, "myapp/payment-success.html", {"transaction": transaction})
+
+    def on_verify_failed(self, transaction, result):
+        # your logic on failed
+        return render(self.request, "myapp/payment-failed.html", {"transaction": transaction, "result": result})
+
+```
+
+---
+
+## Contributing
+
+Pull requests are welcome.
+Follow Django’s reusable app structure as recommended in the official documentation.
+
+---
