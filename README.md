@@ -16,7 +16,7 @@ This package offers utilities for sending payment requests, verifying transactio
 ## Installation
 
 ```bash
-git clone https://github.com/M-mehdiAhmadi/django-zarinpal.git
+git clone https://github.com/M-mehdiAhmadi/django-zarinpal-gateway.git
 ````
 
 Add the app to your Django project:

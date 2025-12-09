@@ -19,6 +19,6 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/M-mehdiAhmadi/django-zarinpal"
-source = "https://github.com/M-mehdiAhmadi/django-zarinpal"
-issues = "https://github.com/M-mehdiAhmadi/django-zarinpal/issues"
+homepage = "https://github.com/M-mehdiAhmadi/django-zarinpal-gateway"
+source = "https://github.com/M-mehdiAhmadi/django-zarinpal-gateway"
+issues = "https://github.com/M-mehdiAhmadi/django-zarinpal-gateway/issues"

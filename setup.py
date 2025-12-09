@@ -6,7 +6,7 @@ setup(
     description="A reusable Django app for ZarinPal payment integration",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/M-mehdiAhmadi/django-zarinpal",
+    url="git@github.com:M-mehdiAhmadi/django-zarinpal-gateway",
     author="Mehdi Ahmadi",
     author_email="ahmadi.mehd2@gmail.com",
     install_requires=[

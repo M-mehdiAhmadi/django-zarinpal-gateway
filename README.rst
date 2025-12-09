@@ -22,7 +22,7 @@ Quick Start
 
 1. Install the package::
 
-       git clone https://github.com/M-mehdiAhmadi/django-zarinpal.git
+       git clone https://github.com/M-mehdiAhmadi/django-zarinpal-gateway.git
 
 2. Add the app to your ``INSTALLED_APPS``::
 
