@@ -14,20 +14,31 @@ This package offers utilities for sending payment requests, verifying transactio
 
 
 ## Installation
-
+### get app with clone
 ```bash
 git clone https://github.com/M-mehdiAhmadi/django-zarinpal-gateway.git
-````
+```
+### get app with pip
+```bash
+pip install git+https://github.com/M-mehdiAhmadi/django-zarinpal-gateway.git
+```
 
-Add the app to your Django project:
 
+### Add the app to your Django project :
+#### if you want to use defulte app
 ```python
 INSTALLED_APPS = [
     ...
     "django_zarinpal_gateway",
 ]
 ```
-
+#### if you want to use custom app
+```python
+INSTALLED_APPS = [
+    ...
+    "your_custom_app",
+]
+```
 ---
 
 ## Configuration
@@ -39,7 +50,7 @@ ZA_MERCHANT_ID = "YOUR_MERCHANT_ID"
 
 ZA_API_REQUEST_URL = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZA_API_VERIFY_URL = "https://api.zarinpal.com/pg/v4/payment/verify.json"
-ZA_API_STARTPAY_URL = "https://www.zarinpal.com/pg/StartPay/{authority}"
+ZA_API_STARTPAY_URL = "https://www.zarinpal.com/pg/StartPay/"
 ```
 
 ---
