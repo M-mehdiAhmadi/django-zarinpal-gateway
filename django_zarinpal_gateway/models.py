@@ -2,13 +2,14 @@ import jdatetime
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class TransactionStatus(models.IntegerChoices):
     PENDING = 0, _("Pending")
     PAID = 1, _("Paid")
     FAILED = 2, _("Failed")
 
 
-class Transaction(models.Model):
+class AbstractTransaction(models.Model):
 
     amount = models.PositiveBigIntegerField(_("Amount"))
     authority = models.CharField(_("Authority"), max_length=64, null=True, blank=True, db_index=True)
@@ -24,12 +25,17 @@ class Transaction(models.Model):
 
     
     class Meta:
+        abstract = True
         verbose_name = _("Transaction")
         verbose_name_plural = _("Transactions")
         ordering = ["-created_at"]
 
+    
+
+class Transaction(AbstractTransaction):
+    
     def __str__(self) -> str:
-        return f"{self.id}"
+        return f"{self.pk}"
 
     def to_jalali(self, dt):
         return jdatetime.datetime.fromgregorian(datetime=dt) if dt else None
@@ -47,4 +53,8 @@ class Transaction(models.Model):
     
     def get_verified_at_jalali_display(self):
         return self.verified_at_jalali.strftime("%Y/%m/%d %H:%M:%S") if self.verified_at_jalali else "-"
-
+    
+    class Meta:
+        verbose_name = _("Transaction")
+        verbose_name_plural = _("Transactions")
+        ordering = ["-created_at"]
