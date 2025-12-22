@@ -49,8 +49,7 @@ ZA_API_STARTPAY_URL = "https://www.zarinpal.com/pg/StartPay/{authority}"
 ### Creating a payment request
 
 ```python
-from .views import BaseTransactionRequestView
-from .models import TransactionStatus
+from django_zarinpal_gateway.views import BaseTransactionRequestView
 
 class MyPaymentRequestView(BaseTransactionRequestView):
     template_name = "myapp/custom_payment_form.html"
@@ -61,7 +60,6 @@ class MyPaymentRequestView(BaseTransactionRequestView):
 
 ```python
 from django_zarinpal_gateway.views import BaseTransactionVerifyView
-from .models import Transaction, TransactionStatus
 from django.shortcuts import render
 
 class MyPaymentVerifyView(BaseTransactionVerifyView):
