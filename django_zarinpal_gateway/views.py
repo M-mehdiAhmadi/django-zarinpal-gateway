@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView,DetailView
-from .models import Transaction, TransactionStatus
-from .zarinpal import Zarinpal
-from . import forms
+from django_zarinpal_gateway.models import Transaction, TransactionStatus
+from django_zarinpal_gateway.zarinpal import Zarinpal
+from django_zarinpal_gateway import forms
 
 
 class BaseTransactionRequestView(CreateView):

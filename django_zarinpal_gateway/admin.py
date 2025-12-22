@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Transaction
+from django_zarinpal_gateway.models import Transaction
 
 
 @admin.register(Transaction)
