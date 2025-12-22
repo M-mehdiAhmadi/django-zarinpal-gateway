@@ -34,7 +34,8 @@ class BaseTransactionRequestView(CreateView):
     """
     form_class = forms.TransactionForm
     queryset = Transaction.objects.all()
-
+    
+    error_template = "zarinpal/transaction-error.html"
     # -----------------------------
     # Hooks for customization
     # -----------------------------
@@ -70,14 +71,15 @@ class BaseTransactionRequestView(CreateView):
 
     def handle_request_error(self, result: dict):
         """Render error page."""
-        return render(self.request, "zarinpal/transaction-error.html", {"result": result})
+        return render(self.request, self.error_template, {"result": result})
 
-    # -----------------------------
-    # Orchestration
-    # -----------------------------
-    def form_valid(self, form):
+    def get_transaction(self,form:form_class) -> Transaction:
         transaction: Transaction = form.save(commit=False)
         transaction.status = self.get_initial_status()
+        return transaction
+
+    def form_valid(self, form):
+        transaction = self.get_transaction(form)
         transaction.save()
 
         # Provider client
@@ -128,7 +130,8 @@ class BaseTransactionVerifyView(DetailView):
     model = Transaction
     slug_field = "authority"
     slug_url_kwarg = "authority"
-
+    success_template = "zarinpal/verify-success.html"
+    failed_template = "zarinpal/verify-failed.html"
     # -----------------------------
     # Hooks for customization
     # -----------------------------
@@ -138,7 +141,7 @@ class BaseTransactionVerifyView(DetailView):
 
     def get_authority(self):
         """Read authority from query or URL."""
-        return self.kwargs.get(self.slug_url_kwarg)
+        return self.slug_url_kwarg
 
     def create_gateway_client(self, transaction: Transaction):
         """Provider client for verification."""
@@ -151,7 +154,7 @@ class BaseTransactionVerifyView(DetailView):
         """Call provider verify API."""
         return client.verify(authority)
 
-    def is_verified(self, result):
+    def is_verified(self, result:dict):
         """Check if provider verification succeeded."""
         return "data" in result and result["data"].get("code") == 100
 
@@ -164,17 +167,14 @@ class BaseTransactionVerifyView(DetailView):
         transaction.status = TransactionStatus.PAID
         transaction.ref_id = ref_id
         transaction.save(update_fields=["status", "ref_id"])
-        return render(self.request, "zarinpal/verify-success.html", {"transaction": transaction})
+        return render(self.request, self.success_template, {"transaction": transaction})
 
-    def on_verify_failed(self, transaction, result):
+    def on_verify_failed(self, transaction:Transaction, result:dict):
         """What to do on failure."""
         transaction.status = TransactionStatus.FAILED
         transaction.save(update_fields=["status"])
-        return render(self.request, "zarinpal/verify-failed.html", {"transaction": transaction, "result": result})
+        return render(self.request, self.failed_template, {"transaction": transaction, "result": result})
 
-    # -----------------------------
-    # Orchestration
-    # -----------------------------
     def get(self, request, *args, **kwargs):
         self.request = request
         transaction = self.get_transaction()
