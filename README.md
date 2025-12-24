@@ -46,11 +46,11 @@ INSTALLED_APPS = [
 Add the following settings to `settings.py`:
 
 ```python
-ZA_MERCHANT_ID = "YOUR_MERCHANT_ID"
+ZARINPAL_MERCHANT_ID = "YOUR_MERCHANT_ID"
 
-ZA_API_REQUEST_URL = "https://api.zarinpal.com/pg/v4/payment/request.json"
-ZA_API_VERIFY_URL = "https://api.zarinpal.com/pg/v4/payment/verify.json"
-ZA_API_STARTPAY_URL = "https://www.zarinpal.com/pg/StartPay/"
+ZARINPAL_API_REQUEST_URL = "https://api.zarinpal.com/pg/v4/payment/request.json"
+ZARINPAL_API_VERIFY_URL = "https://api.zarinpal.com/pg/v4/payment/verify.json"
+ZARINPAL_API_STARTPAY_URL = "https://www.zarinpal.com/pg/StartPay/"
 ```
 
 ---
@@ -78,7 +78,7 @@ class MyPaymentVerifyView(BaseTransactionVerifyView):
         # your logic on success
         return render(self.request, "myapp/payment-success.html", {"transaction": transaction})
 
-    def on_verify_failed(self, transaction, result):
+    def on_verify_failed(self, transaction: Transaction, result: dict):
         # your logic on failed
         return render(self.request, "myapp/payment-failed.html", {"transaction": transaction, "result": result})
 
