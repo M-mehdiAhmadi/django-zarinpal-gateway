@@ -45,17 +45,7 @@ class Zarinpal:
             "authority": authority
         }
         return self._post(settings.ZARINPAL_API_VERIFY_URL, payload)
-
-    # -----------------------------
-    # Payment Inquiry
-    # -----------------------------
-    def inquiry(self, authority) -> dict:
-        payload = {
-            "merchant_id": self.merchant_id,
-            "authority": authority
-        }
-        return self._post(settings.ZARINPAL_API_INQUIRY_URL, payload)
-
+    
     # -----------------------------
     # Generic POST helper
     # -----------------------------
@@ -66,4 +56,5 @@ class Zarinpal:
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
-            return {"error": str(e)}
+            return {"error": str(e),"response":json.dump(obj=response.json(),indent=4)}
+
