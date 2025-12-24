@@ -5,7 +5,6 @@ from django_zarinpal_gateway.models import Transaction, TransactionStatus
 from django_zarinpal_gateway.zarinpal import Zarinpal
 from django_zarinpal_gateway import forms
 
-
 class BaseTransactionRequestView(CreateView):
     """
     Base view for initiating a Zarinpal payment transaction.
@@ -141,7 +140,7 @@ class BaseTransactionVerifyView(DetailView):
 
     def get_authority(self):
         """Read authority from query or URL."""
-        return self.slug_url_kwarg
+        return self.kwargs.get(self.slug_url_kwarg)
 
     def create_gateway_client(self, transaction: Transaction):
         """Provider client for verification."""
