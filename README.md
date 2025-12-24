@@ -51,6 +51,8 @@ ZARINPAL_MERCHANT_ID = "YOUR_MERCHANT_ID"
 ZARINPAL_API_REQUEST_URL = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZARINPAL_API_VERIFY_URL = "https://api.zarinpal.com/pg/v4/payment/verify.json"
 ZARINPAL_API_STARTPAY_URL = "https://www.zarinpal.com/pg/StartPay/"
+
+ZARINPAL_CALLBACK_URL = "your_callback_url"
 ```
 
 ---
