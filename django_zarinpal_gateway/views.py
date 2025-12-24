@@ -138,6 +138,12 @@ class BaseTransactionVerifyView(DetailView):
         """Return transaction instance."""
         return self.get_object()
 
+    def get_object(self, **kwargs):
+        if not self.slug_url_kwarg in self.kwargs.keys():
+            self.kwargs[self.slug_url_kwarg] = self.request.GET.get(self.slug_url_kwarg, '')
+        object = super().get_object(**kwargs)
+        return object
+    
     def get_authority(self):
         """Read authority from query or URL."""
         return self.kwargs.get(self.slug_url_kwarg)
