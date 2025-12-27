@@ -45,7 +45,7 @@ class Transaction(AbstractTransaction):
         return self.to_jalali(self.created_at)
     
     def get_created_at_jalali_display(self):
-        return self.created_at_jalali.strftime("%Y/%m/%d %H:%M:%S")
+        return self.created_at_jalali.strftime("%Y/%m/%d %H:%M:%S") if self.created_at_jalali else "-"
 
     @property
     def verified_at_jalali(self):
@@ -53,9 +53,17 @@ class Transaction(AbstractTransaction):
     
     def get_verified_at_jalali_display(self):
         return self.verified_at_jalali.strftime("%Y/%m/%d %H:%M:%S") if self.verified_at_jalali else "-"
-    
+
     def get_status_display(self):
-        return self.status.label
+        """Return the human-readable label for the status choice.
+
+        Uses the TransactionStatus enum to avoid attribute errors when
+        `self.status` is an integer.
+        """
+        try:
+            return TransactionStatus(self.status).label
+        except Exception:
+            return str(self.status)
     class Meta:
         verbose_name = _("Transaction")
         verbose_name_plural = _("Transactions")
