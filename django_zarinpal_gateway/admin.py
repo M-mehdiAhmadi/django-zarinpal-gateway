@@ -1,8 +1,7 @@
 from django.contrib import admin
-from django_zarinpal_gateway.models import Transaction
+from django.utils.translation import gettext_lazy as _
+from django_zarinpal_gateway import models
 
-
-@admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     list_display = (
         "id",
@@ -19,10 +18,22 @@ class TransactionAdmin(admin.ModelAdmin):
         "get_status_display",
     )
     list_per_page = 100
+    
+    @admin.display(description=_("created at"))
+    def get_created_at_jalali_display(self, obj:models.Transaction):
+        return obj.get_created_at_jalali_display()
 
+    @admin.display(description=_("Verified At"))
+    def get_verified_at_jalali_display(self, obj:models.Transaction):
+        return obj.get_verified_at_jalali_display()
+
+    @admin.display(description=_("status"))
+    def get_status_display(self, obj:models.Transaction):
+        return obj.get_status_display()
+    
     # Show amount with thousands separator
     def formatted_amount(self, obj):
         return f"{obj.amount:,}"
-    formatted_amount.short_description = "Amount (Rials)"
+    formatted_amount.short_description = _("Amount (Rials)")
     formatted_amount.admin_order_field = "amount"
 
